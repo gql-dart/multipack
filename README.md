@@ -17,7 +17,7 @@ A tool for monorepo management. Link local packages and execute commands in topo
 [github-watch-badge]: https://img.shields.io/github/watchers/gql-dart/multipack.svg?style=for-the-badge&logo=github&logoColor=ffffff
 [github-watch-link]: https://github.com/gql-dart/multipack/watchers
 [github-star-badge]: https://img.shields.io/github/stars/gql-dart/multipack.svg?style=for-the-badge&logo=github&logoColor=ffffff
-[github-star-link]: https://github.com/zino-app/graphql-flutter/stargazers
+[github-star-link]: https://github.com/gql-dart/multipack/stargazers
 [github-forks-badge]: https://img.shields.io/github/forks/gql-dart/multipack.svg?style=for-the-badge&logo=github&logoColor=ffffff
 [github-forks-link]: https://github.com/gql-dart/multipack/network/members
 
