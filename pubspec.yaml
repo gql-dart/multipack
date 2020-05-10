@@ -6,7 +6,7 @@ environment:
   sdk: '>=2.7.2 <3.0.0'
 dependencies: 
   ansicolor: ^1.0.2
-  args: 1.6.0
+  args: ^1.6.0
   directed_graph: ^0.1.2
   meta: ^1.0.0
   pubspec: ^0.1.2
