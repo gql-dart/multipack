@@ -1,0 +1,32 @@
+name: Test
+on: pull_request
+
+jobs:
+  packages:
+    runs-on: ubuntu-latest
+    container:
+      image: google/dart:latest
+    name: Check multipack
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+      - name: Get dependencies
+        run: |
+          pub --version
+          pub get
+      - name: Check formatting
+        run: |
+          echo ""
+          echo "A list of incorrectly formatted files may follow:"
+          echo ""
+          dartfmt --version
+          dartfmt -n . --set-exit-if-changed
+          echo ""
+      - name: Analyze package
+        run: |
+          dartanalyze --version
+          dartanalyze --fatal-warnings --no-hints .
+      - name: Run tests
+        run: |
+          exec [ ! -d ./test ] && exit 0
+          pub run test

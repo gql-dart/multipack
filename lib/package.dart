@@ -1,6 +1,10 @@
+@experimental
+library package;
+
 import "dart:io";
 
 import "package:directed_graph/directed_graph.dart";
+import "package:meta/meta.dart";
 import "package:pubspec/pubspec.dart";
 import "package:ansicolor/ansicolor.dart";
 

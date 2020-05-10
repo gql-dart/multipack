@@ -1,10 +1,13 @@
 name: multipack
+description: A tool for monorepo management. Link local packages and execute commands in topological order.
+version: 0.1.0
 environment: 
   sdk: '>=2.7.2 <3.0.0'
 dependencies: 
   ansicolor: ^1.0.2
   args: 1.6.0
   directed_graph: ^0.1.2
+  meta: ^1.0.0
   pubspec: ^0.1.2
   pub_semver: ^1.4.4
   path: ^1.6.4
