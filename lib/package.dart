@@ -42,6 +42,18 @@ class Package {
     this.isFlutter,
   });
 
+  Future<bool> hasChangedSince(String since) async {
+    if (since == null) return true;
+
+    final process = await Process.start(
+      "git",
+      ["diff", "--exit-code", "--name-only", since, "."],
+      workingDirectory: directory.path,
+    );
+
+    return await process.exitCode != 0;
+  }
+
   Future<int> run(
     String executable,
     List<String> arguments, {

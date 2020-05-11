@@ -24,6 +24,13 @@ void main(List<String> arguments) async {
     "Manage monorepo.",
   );
 
+  runner.argParser.addOption(
+    "since",
+    abbr: "d",
+    help: "Consider only the changed packages.",
+    valueHelp: "commit",
+  );
+
   runner.argParser.addMultiOption(
     "only",
     abbr: "o",

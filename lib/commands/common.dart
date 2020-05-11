@@ -38,6 +38,8 @@ abstract class MultipackCommand extends Command<void> {
       )
       .toList();
 
+  String get since => globalResults["since"] as String;
+
   int get nameWidth => targetNames
       .map(
         (name) => name.length,
@@ -50,6 +52,8 @@ abstract class MultipackCommand extends Command<void> {
   Future<void> run() async {
     final exitCodes = <int>[];
     for (final target in targets) {
+      if (!await target.hasChangedSince(since)) continue;
+
       exitCodes.add(await runOnPackage(target));
     }
 

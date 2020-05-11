@@ -1,3 +1,7 @@
+## 0.1.2
+
+- run only on changed packages using `--since`
+
 ## 0.1.1
 
 - fix readme link
