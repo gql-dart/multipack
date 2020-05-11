@@ -99,3 +99,7 @@ That implies the following properties:
 - https://pub.dev/packages/shared_versions
 - https://pub.dev/packages/dpm
 - https://pub.dev/packages/mono_repo
+- https://pub.dev/packages/tuneup
+- https://pub.dev/packages/test_coverage
+- https://pub.dev/packages/dependency_validator
+- https://pub.dev/packages/pkgraph
