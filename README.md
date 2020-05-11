@@ -86,3 +86,16 @@ That implies the following properties:
 - knows about Dart and Flutter (in that order) tooling
 - knows about git
 - fine-tuned for use in GitHub Actions
+- packages follow a common "template"
+
+
+## Other interesting tools:
+
+- https://pub.dev/packages/pubviz
+- https://pub.dev/packages/gpm
+- https://pub.dev/packages/pubspec_version
+- https://pub.dev/packages/grinder
+- https://pub.dev/packages/fvm
+- https://pub.dev/packages/shared_versions
+- https://pub.dev/packages/dpm
+- https://pub.dev/packages/mono_repo
