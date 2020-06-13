@@ -24,8 +24,8 @@ jobs:
           echo ""
       - name: Analyze package
         run: |
-          dartanalyze --version
-          dartanalyze --fatal-warnings --no-hints .
+          dartanalyzer --version
+          dartanalyzer --fatal-warnings --no-hints .
       - name: Run tests
         run: |
           exec [ ! -d ./test ] && exit 0
