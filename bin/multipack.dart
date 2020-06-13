@@ -7,9 +7,7 @@ import "package:multipack/commands.dart";
 void main(List<String> arguments) async {
   final dependencyGraph = await getPackageGraph(Directory.current);
 
-  final orderedPackages = dependencyGraph
-      .sortedTopologicalOrdering()
-      .reversed
+  final orderedPackages = dependencyGraph.sortedTopologicalOrdering.reversed
       .map((vertex) => vertex.data)
       .toList();
 
