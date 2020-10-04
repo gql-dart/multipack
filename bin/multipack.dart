@@ -47,6 +47,7 @@ void main(List<String> arguments) async {
 
   runner.addCommand(PubCommand(orderedPackages));
   runner.addCommand(FmtCommand(orderedPackages));
+  runner.addCommand(InfoCommand(orderedPackages));
   runner.addCommand(AnalyzeCommand(orderedPackages));
   runner.addCommand(ExecCommand(orderedPackages));
   runner.addCommand(PubspecCommand(orderedPackages));

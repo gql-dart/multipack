@@ -31,12 +31,14 @@ final failurePen = AnsiPen()
 
 class Package {
   final Directory directory;
+  final String namespace;
   final String name;
   final PubSpec pubspec;
   final bool isFlutter;
 
   const Package({
     this.directory,
+    this.namespace,
     this.name,
     this.pubspec,
     this.isFlutter,
@@ -144,8 +146,18 @@ Stream<Package> findPackages(Directory root) =>
       (dir) async {
         final pubspec = await PubSpec.load(dir);
 
+        final dirPath = dir.path;
+        final rootPath = root.path;
+
+        final rootIndex = rootPath.length;
+        final dirIndex = dirPath.lastIndexOf(Platform.pathSeparator);
+
         return Package(
           directory: dir,
+          namespace: dirPath.substring(
+            rootIndex == dirIndex ? rootIndex : rootIndex + 1,
+            dirIndex,
+          ),
           name: pubspec.name,
           isFlutter: pubspec.allDependencies.containsKey("flutter"),
           pubspec: pubspec,

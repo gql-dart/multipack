@@ -1,3 +1,7 @@
+## 0.1.4
+
+- implement info command to print GraphViz dor file
+
 ## 0.1.3
 
 - upgrade `directed_graph: ^0.1.4`
