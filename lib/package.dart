@@ -152,12 +152,14 @@ Stream<Package> findPackages(Directory root) =>
         final rootIndex = rootPath.length;
         final dirIndex = dirPath.lastIndexOf(Platform.pathSeparator);
 
+        final namespace = dirPath.substring(
+          rootIndex >= dirIndex ? rootIndex : rootIndex + 1,
+          rootIndex > dirIndex ? rootIndex : dirIndex,
+        );
+
         return Package(
           directory: dir,
-          namespace: dirPath.substring(
-            rootIndex == dirIndex ? rootIndex : rootIndex + 1,
-            dirIndex,
-          ),
+          namespace: namespace,
           name: pubspec.name,
           isFlutter: pubspec.allDependencies.containsKey("flutter"),
           pubspec: pubspec,
