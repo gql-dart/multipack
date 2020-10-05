@@ -45,6 +45,7 @@ void main(List<String> arguments) async {
     allowed: packageNames,
   );
 
+  runner.addCommand(DoctorCommand());
   runner.addCommand(PubCommand(orderedPackages));
   runner.addCommand(FmtCommand(orderedPackages));
   runner.addCommand(InfoCommand(orderedPackages));

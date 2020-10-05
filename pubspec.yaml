@@ -12,6 +12,7 @@ dependencies:
   pubspec: ^0.1.2
   pub_semver: ^1.4.4
   path: ^1.6.4
+  process_run: ^0.11.0
 dev_dependencies: 
   gql_pedantic: ^1.0.1
 executables:
