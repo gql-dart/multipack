@@ -25,11 +25,11 @@ jobs:
           echo ""
           echo "A list of incorrectly formatted files may follow:"
           echo ""
-          uni format -n . --set-exit-if-changed
+          uni --tooling legacy format -n . --set-exit-if-changed
           echo ""
       - name: Analyze package
         run: |
-          uni analyze --fatal-warnings --no-hints .
+          uni analyze --fatal-warnings .
       - name: Run tests
         run: |
           exec [ ! -d ./test ] && exit 0
