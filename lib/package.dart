@@ -3,10 +3,10 @@ library package;
 
 import "dart:io";
 
+import "package:ansicolor/ansicolor.dart";
 import "package:directed_graph/directed_graph.dart";
 import "package:meta/meta.dart";
 import "package:pubspec/pubspec.dart";
-import "package:ansicolor/ansicolor.dart";
 
 final mpPen = AnsiPen()
   ..xterm(89, bg: true)
@@ -129,6 +129,21 @@ class Package {
   }) {
     const executable = "dartanalyzer";
     final arguments = args;
+
+    return run(
+      executable,
+      arguments,
+      nameWidth: nameWidth,
+    );
+  }
+
+  Future<int> test(
+    List<String> args, {
+    int nameWidth,
+  }) {
+    final executable = isFlutter ? "flutter" : "dart";
+
+    final arguments = isFlutter ? ["test", ...args] : ["test", ...args];
 
     return run(
       executable,

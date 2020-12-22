@@ -1,8 +1,8 @@
 import "dart:io";
 
 import "package:args/command_runner.dart";
-import "package:multipack/package.dart";
 import "package:multipack/commands.dart";
+import "package:multipack/package.dart";
 
 void main(List<String> arguments) async {
   final dependencyGraph = await getPackageGraph(Directory.current);
@@ -51,6 +51,7 @@ void main(List<String> arguments) async {
   runner.addCommand(AnalyzeCommand(orderedPackages));
   runner.addCommand(ExecCommand(orderedPackages));
   runner.addCommand(PubspecCommand(orderedPackages));
+  runner.addCommand(TestCommand(orderedPackages));
 
   await runner.run(arguments);
 }
