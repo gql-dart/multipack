@@ -47,7 +47,8 @@ Available commands:
   exec      Execute any command.
   fmt       Run formatter.
   pub       Run pub.
-  pubspec   Update pubspec.yaml
+  pubspec   Update pubspec.yaml.
+  test      Run tests.
 ``` 
 
 `pubspec` has 3 subcommands:
