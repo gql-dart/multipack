@@ -10,23 +10,27 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
+      - name: Activate uni
+        run: |
+          echo "::add-path::$HOME/.pub-cache/bin"
+          pub global activate uni
+      - name: Tooling info
+        run: |
+          uni doctor
       - name: Get dependencies
         run: |
-          pub --version
-          pub get
+          uni pub get
       - name: Check formatting
         run: |
           echo ""
           echo "A list of incorrectly formatted files may follow:"
           echo ""
-          dartfmt --version
-          dartfmt -n . --set-exit-if-changed
+          uni --tooling legacy format -n . --set-exit-if-changed
           echo ""
       - name: Analyze package
         run: |
-          dartanalyzer --version
-          dartanalyzer --fatal-warnings --no-hints .
+          uni analyze --fatal-warnings .
       - name: Run tests
         run: |
           exec [ ! -d ./test ] && exit 0
-          pub run test
+          uni pub run test
