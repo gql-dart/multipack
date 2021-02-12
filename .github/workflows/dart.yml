@@ -28,5 +28,5 @@ jobs:
           dartanalyzer --fatal-warnings --no-hints .
       - name: Run tests
         run: |
-          exec [ ! -d ./test ] && exit 0
+          `exec [ ! -d ./test ]` && exit 0
           pub run test
