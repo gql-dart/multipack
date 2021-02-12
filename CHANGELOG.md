@@ -1,3 +1,7 @@
+## 0.1.5
+
+- fix #2,implementing topologicalOrdering pub get
+
 ## 0.1.4
 
 - implement info command to print GraphViz dor file

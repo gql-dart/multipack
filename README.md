@@ -155,7 +155,7 @@ multipack create gql_link gql_local_state_link --version 0.1.0 --in ./links/
 multipack test
 multipack test --coverage
 multipack build
-multipack clean
+multipack pubspec clean
 ```
 
 ### `singlepack`

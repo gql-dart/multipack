@@ -1,15 +1,14 @@
 import "dart:io";
 
 import "package:args/command_runner.dart";
+import "package:directed_graph/directed_graph.dart";
 import "package:multipack/commands.dart";
 import "package:multipack/package.dart";
 
 void main(List<String> arguments) async {
-  final dependencyGraph = await getPackageGraph(Directory.current);
-
-  final orderedPackages = dependencyGraph.sortedTopologicalOrdering.reversed
-      .map((vertex) => vertex.data)
-      .toList();
+  final DirectedGraph<Package> dependencyGraph =
+      await getPackageGraph(Directory.current);
+  final List<Package> orderedPackages = getOrderdPackages(dependencyGraph);
 
   final packageNames = orderedPackages
       .map(
@@ -54,4 +53,16 @@ void main(List<String> arguments) async {
   runner.addCommand(TestCommand(orderedPackages));
 
   await runner.run(arguments);
+}
+
+List<Package> getOrderdPackages(DirectedGraph<Package> dependencyGraph) {
+  final List<Package> packages =
+      dependencyGraph.edgeMap.keys.map((vertex) => vertex.data).toList();
+  final topologicalOrdering = dependencyGraph.sortedTopologicalOrdering.reversed
+      .map((vertex) => vertex.data)
+      .toList();
+  final freeDependentPackages =
+      packages.toSet().difference(topologicalOrdering.toSet());
+  final orderedPackages = [...topologicalOrdering, ...freeDependentPackages];
+  return orderedPackages;
 }

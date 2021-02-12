@@ -156,29 +156,37 @@ class Package {
   String toString() => name;
 }
 
-Stream<Package> findPackages(Directory root) =>
-    findPackageDirectories(root).asyncMap(
-      (dir) async {
-        final pubspec = await PubSpec.load(dir);
+Stream<Package> findPackages(Directory root) {
+  final rootPath = root.path;
+  final rootIndex = rootPath.length;
+  return findPackageDirectories(root).asyncMap(
+    (dir) async {
+      final pubspec = await PubSpec.load(dir);
 
-        final dirPath = dir.path;
-        final rootPath = root.path;
+      final dirPath = dir.path;
+      final dirIndex = dirPath.lastIndexOf(Platform.pathSeparator);
 
-        final rootIndex = rootPath.length;
-        final dirIndex = dirPath.lastIndexOf(Platform.pathSeparator);
+      return Package(
+        directory: dir,
+        namespace: getNamespace(dirPath, rootIndex, dirIndex),
+        name: pubspec.name,
+        isFlutter: pubspec.allDependencies.containsKey("flutter"),
+        pubspec: pubspec,
+      );
+    },
+  );
+}
 
-        return Package(
-          directory: dir,
-          namespace: dirPath.substring(
-            rootIndex == dirIndex ? rootIndex : rootIndex + 1,
-            dirIndex,
-          ),
-          name: pubspec.name,
-          isFlutter: pubspec.allDependencies.containsKey("flutter"),
-          pubspec: pubspec,
-        );
-      },
-    );
+/// The test case(`get_namespace.test.dart`) shows possible DIRPATH situations
+String getNamespace(String dirPath, int rootIndex, int dirIndex) {
+  int namespaceStartIndex = rootIndex == dirIndex ? rootIndex : rootIndex + 1;
+  if (namespaceStartIndex > dirIndex) namespaceStartIndex = dirIndex;
+
+  return dirPath.substring(
+    namespaceStartIndex,
+    dirIndex,
+  );
+}
 
 Stream<Directory> findPackageDirectories(Directory root) => root
     .list(recursive: true)
@@ -192,28 +200,39 @@ Stream<Directory> findPackageDirectories(Directory root) => root
       (pubspec) => pubspec.parent.absolute,
     );
 
+/// step1: Get all packages as `heads` through `findPackages`.
+///   It can be converted to a dependency graph,
+///   whose head is in `heads` and tail is in `heads.data.pubspec.dependencies`
+/// step2: Find a subgraph from dependency graph.
+///   The tail of that subgraph is in `heads`
 Future<DirectedGraph<Package>> getPackageGraph(Directory root) async {
-  final vertices = await findPackages(root)
+  final heads = await findPackages(root)
       .map((package) => Vertex<Package>(package))
       .toList();
 
+  final edges = getEdges(heads);
+
   return DirectedGraph<Package>(
-    {
-      for (var vertex in vertices)
-        vertex: vertex.data.pubspec.allDependencies.keys
-            .map(
-              (dep) => vertices.firstWhere(
-                (v) => v.data.name == dep,
-                orElse: () => null,
-              ),
-            )
-            .where((v) => v != null)
-            .toList(),
-    },
+    edges,
     comparator: (
       Vertex<Package> vertex1,
       Vertex<Package> vertex2,
     ) =>
         vertex1.data.name.compareTo(vertex2.data.name),
   );
+}
+
+Map<Vertex<Package>, List<Vertex<Package>>> getEdges(
+    List<Vertex<Package>> heads) {
+  final headsMap = Map.fromIterables(heads.map((e) => e.data.name), heads);
+  return {
+    for (Vertex<Package> head in heads)
+      // head: tail
+      head: head.data.pubspec.dependencies.keys
+          .map(
+            (dep) => headsMap.containsKey(dep) ? headsMap[dep] : null,
+          )
+          .where((v) => v != null)
+          .toList(),
+  };
 }
