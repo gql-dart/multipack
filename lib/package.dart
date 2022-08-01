@@ -99,8 +99,8 @@ class Package {
     List<String> args, {
     int nameWidth,
   }) {
-    final executable = isFlutter ? "flutter" : "pub";
-    final arguments = isFlutter ? ["pub", ...args] : args;
+    final executable = isFlutter ? "flutter" : "dart";
+    final arguments = ["pub", ...args];
 
     return run(
       executable,
@@ -113,7 +113,7 @@ class Package {
     List<String> args, {
     int nameWidth,
   }) {
-    final executable = isFlutter ? "flutter" : "dartfmt";
+    final executable = isFlutter ? "flutter" : "dart";
     final arguments = isFlutter ? ["format", ...args] : args;
 
     return run(
@@ -127,8 +127,8 @@ class Package {
     List<String> args, {
     int nameWidth,
   }) {
-    const executable = "dartanalyzer";
-    final arguments = args;
+    final executable = isFlutter ? "flutter" : "dart";
+    final arguments = ["format", ...args];
 
     return run(
       executable,
