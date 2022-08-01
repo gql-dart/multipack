@@ -2,8 +2,8 @@ import "dart:async";
 
 import "package:multipack/commands/common.dart";
 import "package:multipack/package.dart";
-import "package:pubspec/pubspec.dart";
 import "package:path/path.dart" as path;
+import "package:pubspec/pubspec.dart";
 
 class HardOverrideCommand extends MultipackCommand {
   HardOverrideCommand(
