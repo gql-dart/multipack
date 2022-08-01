@@ -1,3 +1,8 @@
+## 0.2.0
+
+- migrate to new dart tool names.
+  dartfmt -> dart format, dartanalyzer -> dart analyze...
+
 ## 0.1.4
 
 - implement info command to print GraphViz dor file
