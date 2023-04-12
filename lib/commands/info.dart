@@ -44,7 +44,8 @@ class InfoCommand extends Command<void> {
 
     for (final package in packages) {
       print(
-          '  ${package.name} [shape="box"; color="${getColor(package.name)}"];',);
+        '  ${package.name} [shape="box"; color="${getColor(package.name)}"];',
+      );
     }
 
     for (final package in packages) {

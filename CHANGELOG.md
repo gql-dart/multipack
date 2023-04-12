@@ -1,3 +1,7 @@
+## 0.3.0
+
+- null safety
+
 ## 0.2.0
 
 - migrate to new dart tool names.

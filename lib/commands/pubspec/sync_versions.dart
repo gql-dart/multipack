@@ -47,7 +47,7 @@ class SyncVersionsCommand extends MultipackCommand {
       final pubspec = package.pubspec;
       await pubspec
           .copy(
-            dependencies:  updateDependencies(pubspec.dependencies),
+            dependencies: updateDependencies(pubspec.dependencies),
             devDependencies: updateDependencies(pubspec.devDependencies),
           )
           .save(package.directory);
