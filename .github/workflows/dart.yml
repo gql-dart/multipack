@@ -5,15 +5,15 @@ jobs:
   packages:
     runs-on: ubuntu-latest
     container:
-      image: google/dart:latest
+      image: dart:latest
     name: Check multipack
     steps:
       - name: Clone repository
         uses: actions/checkout@v2
       - name: Get dependencies
         run: |
-          pub --version
-          pub get
+          dart --version
+          dart pub get
       - name: Check formatting
         run: |
           echo ""

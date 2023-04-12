@@ -4,6 +4,7 @@ library package;
 import "dart:io";
 
 import "package:ansicolor/ansicolor.dart";
+import 'package:collection/collection.dart';
 import "package:directed_graph/directed_graph.dart";
 import "package:meta/meta.dart";
 import "package:pubspec/pubspec.dart";
@@ -37,14 +38,14 @@ class Package {
   final bool isFlutter;
 
   const Package({
-    this.directory,
-    this.namespace,
-    this.name,
-    this.pubspec,
-    this.isFlutter,
+    required this.directory,
+    required this.namespace,
+    required this.name,
+    required this.pubspec,
+    required this.isFlutter,
   });
 
-  Future<bool> hasChangedSince(String since) async {
+  Future<bool> hasChangedSince(String? since) async {
     if (since == null) return true;
 
     final process = await Process.start(
@@ -59,7 +60,7 @@ class Package {
   Future<int> run(
     String executable,
     List<String> arguments, {
-    int nameWidth,
+    int nameWidth = 0,
   }) async {
     final packName = packPen.write(
       " ${name.padRight(nameWidth)} ",
@@ -70,8 +71,8 @@ class Package {
       " ${cmd.padRight(nameWidth)} ",
     );
 
-    print("${multipack}${packName}");
-    print("${multipack}${command}");
+    print("$multipack$packName");
+    print("$multipack$command");
 
     final process = await Process.start(
       executable,
@@ -86,9 +87,9 @@ class Package {
 
     final status = exitCode == 0
         ? successPen.write(" success ".padRight(nameWidth + 2))
-        : failurePen.write(" failure ${exitCode} ".padRight(nameWidth + 2));
+        : failurePen.write(" failure $exitCode ".padRight(nameWidth + 2));
 
-    print("${multipack}${status}");
+    print("$multipack$status");
 
     print("");
 
@@ -97,7 +98,7 @@ class Package {
 
   Future<int> pub(
     List<String> args, {
-    int nameWidth,
+    int nameWidth = 0,
   }) {
     final executable = isFlutter ? "flutter" : "dart";
     final arguments = ["pub", ...args];
@@ -111,7 +112,7 @@ class Package {
 
   Future<int> fmt(
     List<String> args, {
-    int nameWidth,
+    int nameWidth = 0,
   }) {
     final executable = isFlutter ? "flutter" : "dart";
     final arguments = isFlutter ? ["format", ...args] : args;
@@ -125,7 +126,7 @@ class Package {
 
   Future<int> analyze(
     List<String> args, {
-    int nameWidth,
+    int nameWidth = 0,
   }) {
     final executable = isFlutter ? "flutter" : "dart";
     final arguments = ["format", ...args];
@@ -139,7 +140,7 @@ class Package {
 
   Future<int> test(
     List<String> args, {
-    int nameWidth,
+    int nameWidth = 0,
   }) {
     final executable = isFlutter ? "flutter" : "dart";
 
@@ -173,7 +174,7 @@ Stream<Package> findPackages(Directory root) =>
             rootIndex == dirIndex ? rootIndex : rootIndex + 1,
             dirIndex,
           ),
-          name: pubspec.name,
+          name: pubspec.name!,
           isFlutter: pubspec.allDependencies.containsKey("flutter"),
           pubspec: pubspec,
         );
@@ -185,7 +186,7 @@ Stream<Directory> findPackageDirectories(Directory root) => root
     .where(
       (entity) =>
           entity is File &&
-          entity.path.endsWith(Platform.pathSeparator + "pubspec.yaml"),
+          entity.path.endsWith("${Platform.pathSeparator}pubspec.yaml"),
     )
     .cast<File>()
     .map(
@@ -193,27 +194,24 @@ Stream<Directory> findPackageDirectories(Directory root) => root
     );
 
 Future<DirectedGraph<Package>> getPackageGraph(Directory root) async {
-  final vertices = await findPackages(root)
-      .map((package) => Vertex<Package>(package))
-      .toList();
+  final vertices = await findPackages(root).toList();
 
   return DirectedGraph<Package>(
     {
       for (var vertex in vertices)
-        vertex: vertex.data.pubspec.allDependencies.keys
+        vertex: vertex.pubspec.allDependencies.keys
             .map(
-              (dep) => vertices.firstWhere(
-                (v) => v.data.name == dep,
-                orElse: () => null,
+              (dep) => vertices.firstWhereOrNull(
+                (v) => v.name == dep,
               ),
             )
-            .where((v) => v != null)
-            .toList(),
+            .whereNotNull()
+            .toSet(),
     },
     comparator: (
-      Vertex<Package> vertex1,
-      Vertex<Package> vertex2,
+      vertex1,
+      vertex2,
     ) =>
-        vertex1.data.name.compareTo(vertex2.data.name),
+        vertex1.name.compareTo(vertex2.name),
   );
 }

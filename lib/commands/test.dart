@@ -13,7 +13,7 @@ class TestCommand extends PassthroughCommand {
 
   @override
   FutureOr<int> runOnPackage(Package package) => package.test(
-        argResults.arguments,
+        argResults!.arguments,
         nameWidth: nameWidth,
       );
 }

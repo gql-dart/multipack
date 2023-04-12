@@ -13,8 +13,8 @@ class ExecCommand extends PassthroughCommand {
 
   @override
   FutureOr<int> runOnPackage(Package package) => package.run(
-        argResults.arguments.first,
-        argResults.arguments.sublist(1),
+        argResults!.arguments.first,
+        argResults!.arguments.sublist(1),
         nameWidth: nameWidth,
       );
 }

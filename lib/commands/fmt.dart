@@ -13,7 +13,7 @@ class FmtCommand extends PassthroughCommand {
 
   @override
   FutureOr<int> runOnPackage(Package package) => package.fmt(
-        argResults.arguments,
+        argResults!.arguments,
         nameWidth: nameWidth,
       );
 }

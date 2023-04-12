@@ -1,9 +1,12 @@
+// ignore_for_file: directives_ordering
+
 import "dart:async";
 
 import "package:multipack/commands/common.dart";
 import "package:multipack/package.dart";
 import "package:pub_semver/pub_semver.dart";
 import "package:pubspec/pubspec.dart";
+import 'package:collection/collection.dart';
 
 class SyncVersionsCommand extends MultipackCommand {
   SyncVersionsCommand(
@@ -20,9 +23,8 @@ class SyncVersionsCommand extends MultipackCommand {
       Map.fromEntries(
         deps.entries.map(
           (entry) {
-            final localDep = packages.firstWhere(
+            final localDep = packages.firstWhereOrNull(
               (package) => package.name == entry.key,
-              orElse: () => null,
             );
 
             if (localDep == null || entry.value is! HostedReference) {
@@ -45,12 +47,8 @@ class SyncVersionsCommand extends MultipackCommand {
       final pubspec = package.pubspec;
       await pubspec
           .copy(
-            dependencies: pubspec.dependencies == null
-                ? null
-                : updateDependencies(pubspec.dependencies),
-            devDependencies: pubspec.devDependencies == null
-                ? null
-                : updateDependencies(pubspec.devDependencies),
+            dependencies: updateDependencies(pubspec.dependencies),
+            devDependencies: updateDependencies(pubspec.devDependencies),
           )
           .save(package.directory);
 
