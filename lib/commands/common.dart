@@ -22,8 +22,8 @@ abstract class MultipackCommand extends Command<void> {
       .toList();
 
   List<String> get targetNames {
-    final whitelist = (globalResults["only"] as Iterable<String>).toList();
-    final blacklist = (globalResults["skip"] as Iterable<String>).toList();
+    final whitelist = (globalResults!["only"] as Iterable<String>).toList();
+    final blacklist = (globalResults!["skip"] as Iterable<String>).toList();
 
     return whitelist
         .where(
@@ -38,7 +38,7 @@ abstract class MultipackCommand extends Command<void> {
       )
       .toList();
 
-  String get since => globalResults["since"] as String;
+  String get since => globalResults!["since"] as String;
 
   int get nameWidth => targetNames
       .map(

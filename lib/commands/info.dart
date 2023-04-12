@@ -44,7 +44,7 @@ class InfoCommand extends Command<void> {
 
     for (final package in packages) {
       print(
-          '  ${package.name} [shape="box"; color="${getColor(package.name)}"];');
+          '  ${package.name} [shape="box"; color="${getColor(package.name)}"];',);
     }
 
     for (final package in packages) {
@@ -54,7 +54,7 @@ class InfoCommand extends Command<void> {
         final attrs = package.pubspec.dependencies.containsKey(dep)
             ? 'style="filled"; color="${getColor(dep)}"'
             : 'style="dashed"; color="${getColor(dep)}"';
-        print("  ${package.name} -> ${dep} [${attrs}];");
+        print("  ${package.name} -> $dep [$attrs];");
       });
     }
 
@@ -64,18 +64,18 @@ class InfoCommand extends Command<void> {
         grouped[package.namespace] = [];
       }
 
-      grouped[package.namespace].add(package);
+      grouped[package.namespace]!.add(package);
 
       return grouped;
     });
 
     groupedPackages.forEach((namespace, packagesInGroup) {
-      print('  subgraph "cluster ${namespace}" {');
-      print('    label="${namespace}";');
+      print('  subgraph "cluster $namespace" {');
+      print('    label="$namespace";');
       print('    color="${getColor(namespace)}";');
-      packagesInGroup.forEach((package) {
+      for (final package in packagesInGroup) {
         print("    ${package.name};");
-      });
+      }
       print("  }");
     });
 

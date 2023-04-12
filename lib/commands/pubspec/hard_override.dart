@@ -1,5 +1,6 @@
 import "dart:async";
 
+import 'package:collection/collection.dart';
 import "package:multipack/commands/common.dart";
 import "package:multipack/package.dart";
 import "package:path/path.dart" as path;
@@ -17,12 +18,11 @@ class HardOverrideCommand extends MultipackCommand {
   @override
   FutureOr<int> runOnPackage(Package package) async {
     try {
-      final map = (String key, DependencyReference ref) {
+      MapEntry<String, DependencyReference> map(String key, DependencyReference ref) {
         if (ref is! HostedReference) return MapEntry(key, ref);
 
-        final localPackage = packages.firstWhere(
+        final localPackage = packages.firstWhereOrNull(
           (package) => package.name == key,
-          orElse: () => null,
         );
 
         if (localPackage == null) return MapEntry(key, ref);
@@ -36,7 +36,7 @@ class HardOverrideCommand extends MultipackCommand {
             ),
           ),
         );
-      };
+      }
 
       await package.pubspec
           .copy(
