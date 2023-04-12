@@ -13,7 +13,7 @@ class PubCommand extends PassthroughCommand {
 
   @override
   FutureOr<int> runOnPackage(Package package) => package.pub(
-        argResults.arguments,
+        argResults!.arguments,
         nameWidth: nameWidth,
       );
 }

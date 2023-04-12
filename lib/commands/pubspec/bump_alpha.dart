@@ -19,7 +19,7 @@ class BumpAlphaCommand extends MultipackCommand {
     try {
       final pubspec = package.pubspec;
 
-      final next = pubspec.version.nextPatch;
+      final next = pubspec.version!.nextPatch;
 
       final alpha = Version(
         next.major,
@@ -40,7 +40,7 @@ class BumpAlphaCommand extends MultipackCommand {
       );
       final changelog = await changelogFile.readAsString();
       await changelogFile.writeAsString(
-        "## ${alpha.toString()}\n\n$changelog",
+        "## $alpha\n\n$changelog",
         flush: true,
       );
 
