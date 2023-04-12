@@ -3,7 +3,13 @@ description: A tool for monorepo management. Link local packages and execute com
 version: 0.2.0
 homepage: https://github.com/gql-dart/multipack
 environment: 
+<<<<<<< Updated upstream
   sdk: '>=2.8.0 <3.0.0'
+||||||| Stash base
+  sdk: '>=2.12.0 <3.0.0'
+=======
+  sdk: '>=2.12.0 <4.0.0'
+>>>>>>> Stashed changes
 dependencies: 
   ansicolor: ^1.0.2
   args: ^1.6.0
