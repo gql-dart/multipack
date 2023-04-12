@@ -5,7 +5,7 @@ jobs:
   packages:
     runs-on: ubuntu-latest
     container:
-      image: google/dart:latest
+      image: dart:latest
     name: Check multipack
     steps:
       - name: Clone repository
