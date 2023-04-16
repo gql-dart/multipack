@@ -38,7 +38,7 @@ abstract class MultipackCommand extends Command<void> {
       )
       .toList();
 
-  String get since => globalResults!["since"] as String;
+  String? get since => globalResults?["since"] as String?;
 
   int get nameWidth => targetNames
       .map(
