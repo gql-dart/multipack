@@ -1,5 +1,5 @@
 name: multipack
-version: 0.3.2+1
+version: 0.3.2+2
 homepage: https://github.com/gql-dart/multipack
 description: A tool for monorepo management. Link local packages and execute commands in topological order.
 environment: 
@@ -9,10 +9,15 @@ dependencies:
   args: ^2.0.0
   collection: ^1.15.0
   directed_graph: ^0.3.0
+  # only needed because of breaking change in 0.1.9
+  # remove when directed_graph >0.3.9 is released that includes the fix
+  # this is only a transitive dependency for directed_graph.
+  lazy_memo: 0.1.7
   meta: ^1.0.0
   path: ^1.6.4
   pub_semver: ^2.0.0
   pubspec: ^2.0.0
+
 
 dev_dependencies:
   lint: ^2.0.0
