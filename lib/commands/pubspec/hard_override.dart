@@ -19,7 +19,9 @@ class HardOverrideCommand extends MultipackCommand {
   FutureOr<int> runOnPackage(Package package) async {
     try {
       MapEntry<String, DependencyReference> map(
-          String key, DependencyReference ref,) {
+        String key,
+        DependencyReference ref,
+      ) {
         if (ref is! HostedReference) return MapEntry(key, ref);
 
         final localPackage = packages.firstWhereOrNull(
