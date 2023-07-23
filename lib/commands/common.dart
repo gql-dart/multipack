@@ -72,12 +72,8 @@ abstract class PassthroughCommand extends MultipackCommand {
   ArgParser argParser = ArgParser.allowAnything();
 
   PassthroughCommand(
-    String name,
-    String description,
-    List<Package> packages,
-  ) : super(
-          name,
-          description,
-          packages,
-        );
+    super.name,
+    super.description,
+    super.packages,
+  );
 }

@@ -1,5 +1,5 @@
 name: multipack
-version: 0.3.2
+version: 0.3.2+1
 homepage: https://github.com/gql-dart/multipack
 description: A tool for monorepo management. Link local packages and execute commands in topological order.
 environment: 

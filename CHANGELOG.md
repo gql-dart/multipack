@@ -1,3 +1,7 @@
+## 0.3.2
+
+- support latest release of 'graphs'
+
 ## 0.3.0
 
 - null safety
